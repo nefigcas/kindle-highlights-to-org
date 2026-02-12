@@ -6,7 +6,8 @@
 ;; Keywords: outlines convenience hardware
 ;; Homepage: https://github.com/Zweihander-Main/kindle-highlights-to-org
 ;; Version: 0.0.2
-;; Package-Requires: ((emacs "26.1") (s "1.12.0"))
+;; Package-Requires: ((emacs "26.1"))
+;; (s "1.12.0"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -58,11 +59,11 @@
   :group 'org
   :prefix "kindle-highlights-to-org-")
 
-(defconst kindle-highlights-to-org--note-seperator "=========="
-  "Separator used in metadata section of 'My Clippings.txt' file.")
+(defconst kindle-highlights-to-org--note-separator "=========="
+  "Separator used in metadata section of \='My Clippings.txt\=' file.")
 
 (defconst kindle-highlights-to-org--metadata-separator "|"
-  "Separator used in metadata section of 'My Clippings.txt' file.")
+  "Separator used in metadata section of \='My Clippings.txt\=' file.")
 
 (defconst kindle-highlights-to-org--regex-title-line "^\\(.*\\)(\\(.*\\))$"
   "Regex to match title line in `My Clippings.txt' file.")
@@ -115,7 +116,7 @@ it can be read and the name is what the user intends."
 Needed for titles from Kindle generated files which may add in BOM<FEFF> marks
 on some but not all titles (possibly related to files spanning multiple firmware
 versions).  Additionally, BOM marks may be found after the first line.  Titles
-are used as keys for note hash table and are compared using 'equal so BOM marks
+are used as keys for note hash table and are compared using equal so BOM marks
 matter."
   (s-trim (remove
            (char-from-name "ZERO WIDTH NO-BREAK SPACE")
@@ -160,7 +161,7 @@ VALUE:
       (insert-file-contents path)
       ;; Break into list of notes, each a string
       (let* ((file-contents (buffer-substring-no-properties (point-min) (point-max)))
-             (data-list (split-string file-contents kindle-highlights-to-org--note-seperator))
+             (data-list (split-string file-contents kindle-highlights-to-org--note-separator))
              (filtered-data (mapc #'kindle-highlights-to-org--normalize-string data-list)))
         ;; For each filtered-data item, match title and metadata
         (dolist (item filtered-data)
