@@ -168,8 +168,10 @@ VALUE:
           (unless (s-matches? "^[ \n]+$" item) ; skip no-content items
             (let* ((lines (s-split "\n" item t))
                    (title-line (nth 0 lines))
-                   (title (s-trim (nth 1 (s-match kindle-highlights-to-org--regex-title-line
-                                                  title-line))))
+                   (title (s-trim (or
+                                   (nth 1 (s-match kindle-highlights-to-org--regex-title-line
+                                                  title-line))
+                                   "Untitled")))
                    (author (s-trim (or
                                     (nth 2 (s-match kindle-highlights-to-org--regex-title-line
                                                    title-line))
